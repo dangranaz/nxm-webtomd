@@ -1,5 +1,11 @@
 # nxm-webtomd
 
+[![crates.io](https://img.shields.io/crates/v/nxm-webtomd.svg)](https://crates.io/crates/nxm-webtomd)
+[![downloads](https://img.shields.io/crates/d/nxm-webtomd.svg)](https://crates.io/crates/nxm-webtomd)
+[![docs.rs](https://img.shields.io/docsrs/nxm-webtomd)](https://docs.rs/nxm-webtomd)
+[![license](https://img.shields.io/crates/l/nxm-webtomd.svg)](#license)
+[![release](https://github.com/dangranaz/nxm-webtomd/actions/workflows/release.yml/badge.svg)](https://github.com/dangranaz/nxm-webtomd/actions/workflows/release.yml)
+
 **nxm-webtomd** turns any web article into clean Markdown — right inside your AI agent.
 
 Point it at a URL and it fetches the page, strips the navigation, ads, and boilerplate, and hands back the **main article content as tidy Markdown** (with optional YAML front‑matter). It speaks the **Model Context Protocol (MCP)** over `stdio`, so it plugs straight into agents like **OpenCode, Claude Code, Cursor, and Kiro** as a callable tool.
