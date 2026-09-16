@@ -14,11 +14,11 @@ It is small, fast, and **dependency‑light** — a single self‑contained bina
 
 From a noisy web page to clean, structured Markdown:
 
-![before / after](docs/assets/before-after.png)
+![before / after](https://raw.githubusercontent.com/dangranaz/nxm-webtomd/main/docs/assets/before-after.png)
 
 A real conversion, live in the terminal:
 
-![live conversion](docs/assets/demo.gif)
+![live conversion](https://raw.githubusercontent.com/dangranaz/nxm-webtomd/main/docs/assets/demo.gif)
 
 ---
 

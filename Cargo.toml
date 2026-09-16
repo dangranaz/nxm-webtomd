@@ -9,6 +9,16 @@ repository = "https://github.com/dangranaz/nxm-webtomd"
 authors = ["Daniele Oddo"]
 keywords = ["mcp", "web", "markdown", "article", "cli"]
 categories = ["command-line-utilities", "text-processing"]
+# Keep the published crate lean: ship only what a consumer needs.
+# Docs assets (images/GIF), CI, and the installer live on GitHub, not on crates.io.
+include = [
+    "src/**/*.rs",
+    "tests/**/*.rs",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE-APACHE",
+    "LICENSE-MIT",
+]
 
 [[bin]]
 name = "nxm-webtomd"
