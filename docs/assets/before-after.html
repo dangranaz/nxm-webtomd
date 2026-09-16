@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>nxm-webtomd — before / after</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --yellow: #d29922;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+  }
+  .card {
+    width: 1200px;
+    height: 630px;               /* LinkedIn-friendly 1.91:1 */
+    padding: 40px 44px;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(1200px 300px at 15% -10%, rgba(88,166,255,.12), transparent 60%),
+      var(--bg);
+  }
+  header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  header h1 { font-size: 30px; letter-spacing: -0.5px; }
+  header h1 .mono { font-family: "SF Mono", ui-monospace, Menlo, monospace; color: var(--accent); }
+  header .tag {
+    font-size: 13px; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px;
+  }
+  .subtitle { color: var(--muted); font-size: 15px; margin-bottom: 22px; }
+  .panels { display: grid; grid-template-columns: 1fr 64px 1fr; gap: 0; flex: 1; align-items: stretch; }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .panel .head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 11px 15px; border-bottom: 1px solid var(--border);
+    font-size: 13px; color: var(--muted);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f56; } .dot.y { background: #ffbd2e; } .dot.g { background: #27c93f; }
+  .label { margin-left: auto; font-weight: 600; letter-spacing: .3px; }
+  .label.before { color: var(--red); }
+  .label.after  { color: var(--green); }
+  .body { padding: 16px 18px; font-size: 12.5px; line-height: 1.5; overflow: hidden; }
+
+  /* messy "before" */
+  .noise { color: #6e7681; }
+  .banner {
+    background: #21262d; border: 1px dashed #3d444d; border-radius: 8px;
+    padding: 8px 10px; margin-bottom: 8px; font-size: 11px; color: var(--yellow);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .navbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .navbar span { background: #21262d; border-radius: 6px; padding: 3px 8px; font-size: 10.5px; color: #6e7681; }
+  .ad {
+    background: repeating-linear-gradient(45deg,#2d2410,#2d2410 8px,#241d0c 8px,#241d0c 16px);
+    border: 1px solid #3a2f12; color: var(--yellow);
+    text-align: center; padding: 14px; border-radius: 8px; margin: 10px 0; font-size: 11px;
+  }
+  .script { color: #4b5563; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; word-break: break-all; }
+  .article-title { color: var(--text); font-size: 16px; font-weight: 700; margin: 6px 0; }
+  .article-p { color: #adbac7; margin-bottom: 8px; }
+
+  /* clean "after" — markdown */
+  .md { font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.65; }
+  .md .fm { color: var(--muted); }
+  .md .key { color: var(--accent); }
+  .md .h { color: #ff7b72; font-weight: 700; }
+  .md .txt { color: #adbac7; }
+  .md .li { color: #adbac7; }
+  .md .lnk { color: var(--accent); }
+  .md .hr { color: #3d444d; }
+
+  .arrow {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); font-size: 30px;
+  }
+  footer {
+    margin-top: 20px; display: flex; align-items: center; gap: 18px;
+    color: var(--muted); font-size: 13px;
+  }
+  footer .pill { border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; }
+  footer .pill b { color: var(--text); }
+  footer .spacer { flex: 1; }
+  footer .repo { font-family: ui-monospace, Menlo, monospace; color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <h1><span class="mono">nxm-webtomd</span></h1>
+      <span class="tag">MCP server · Rust · stdio</span>
+    </header>
+    <div class="subtitle">Turn any web article into clean Markdown — right inside your AI agent.</div>
+
+    <div class="panels">
+      <!-- BEFORE -->
+      <div class="panel">
+        <div class="head">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="noise">raw web page</span>
+          <span class="label before">BEFORE</span>
+        </div>
+        <div class="body">
+          <div class="banner">🍪 We value your privacy — accept cookies? <span>[Accept all]</span></div>
+          <div class="navbar">
+            <span>Home</span><span>News</span><span>Login</span><span>Newsletter</span><span>Share ▾</span><span>Menu ☰</span>
+          </div>
+          <div class="ad">▮ ADVERTISEMENT ▮ — buy now, limited offer</div>
+          <div class="article-title">Self-Improving Agents: What Actually Works</div>
+          <div class="article-p">Most AI agents stop improving once a human stops tuning them…</div>
+          <div class="script">&lt;script&gt;track(u,{ev:'view',id:9f2a})…&lt;/script&gt;</div>
+          <div class="script">&lt;div class="promo-modal" onclick="openPopup()"&gt;…</div>
+          <div class="ad">▮ SPONSORED ▮ — you won't believe #7</div>
+          <div class="script noise">// 90% navigation, ads, trackers, boilerplate</div>
+        </div>
+      </div>
+
+      <div class="arrow">➜</div>
+
+      <!-- AFTER -->
+      <div class="panel">
+        <div class="head">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="noise">article.md</span>
+          <span class="label after">AFTER</span>
+        </div>
+        <div class="body md">
+          <div class="fr"><span class="hr">---</span></div>
+          <div><span class="key">title:</span> <span class="txt">"Self-Improving Agents: What Actually Works"</span></div>
+          <div><span class="key">canonical_url:</span> <span class="lnk">https://example.com/article</span></div>
+          <div><span class="key">byline:</span> <span class="txt">"Jane Doe"</span></div>
+          <div><span class="hr">---</span></div>
+          <div>&nbsp;</div>
+          <div><span class="h">## What Actually Works</span></div>
+          <div>&nbsp;</div>
+          <div class="txt">Most AI agents stop improving once a human</div>
+          <div class="txt">stops tuning them. This piece breaks down…</div>
+          <div>&nbsp;</div>
+          <div class="li">- Harness updates vs. weight updates</div>
+          <div class="li">- Benchmarks: <span class="lnk">[LawBench](…)</span></div>
+          <div class="li">- A feedback loop that <span class="txt">picks</span> the lever</div>
+          <div>&nbsp;</div>
+          <div class="hr">// clean headings · links · lists · code</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span class="pill">🛡️ <b>SSRF-guarded</b></span>
+      <span class="pill">🧷 <b>prompt-injection</b> mitigated</span>
+      <span class="pill">🧹 no JS · no ads</span>
+      <span class="spacer"></span>
+      <span class="repo">github.com/dangranaz/nxm-webtomd</span>
+    </footer>
+  </div>
+</body>
+</html>

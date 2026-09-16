@@ -10,6 +10,18 @@ It is small, fast, and **dependency‑light** — a single self‑contained bina
 
 ---
 
+## Demo
+
+From a noisy web page to clean, structured Markdown:
+
+![before / after](docs/assets/before-after.png)
+
+A real conversion, live in the terminal:
+
+![live conversion](docs/assets/demo.gif)
+
+---
+
 ## Why it exists
 
 Agents are great at reasoning over text, but terrible at reading the raw web: a modern article page is 90% chrome — menus, cookie banners, share widgets, tracking scripts. Feeding all of that to a model wastes tokens and invites **prompt‑injection** from hidden page content.
