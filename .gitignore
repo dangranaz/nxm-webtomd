@@ -1,0 +1,11 @@
+# Build artifacts — local-only, never commit.
+target/
+
+# Agent/tool working directories.
+.kiro/
+.superpowers/
+.claude/
+.cursor/
+.aws/
+.vscode/
+.idea/

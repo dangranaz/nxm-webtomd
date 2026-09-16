@@ -1,0 +1,49 @@
+[package]
+name = "nxm-webtomd"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT OR Apache-2.0"
+description = "A small, dependency-light MCP server that fetches web articles and converts them to clean Markdown."
+repository = "https://github.com/dangranaz/nxm-webtomd"
+authors = ["Daniele Oddo"]
+keywords = ["mcp", "web", "markdown", "article", "cli"]
+categories = ["command-line-utilities", "text-processing"]
+
+[[bin]]
+name = "nxm-webtomd"
+path = "src/main.rs"
+
+[dependencies]
+# Markdown parsing / rendering
+pulldown-cmark = "0.12"
+# Serialization (JSON-RPC messages)
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Error handling
+anyhow = "1"
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+# HTTP client
+reqwest = { version = "0.13", features = ["json", "stream"] }
+# TLS implementation
+rustls = "0.23"
+# Middleware stack
+reqwest-middleware = { version = "0.5", features = ["rustls"] }
+reqwest-ssrf-guard = { version = "0.1", features = ["middleware"] }
+# MIME type detection
+mime = "0.3"
+# HTML extraction to Markdown
+dom_smoothie = "0.18"
+# Bytes utility
+bytes = "1.0"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+opt-level = 3
+lto = "thin"

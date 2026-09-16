@@ -1,0 +1,94 @@
+name: release
+
+# Build release binaries for macOS arm64 and Linux x86_64, then attach them
+# (with .sha256 sidecars) to the GitHub Release when a v* tag is pushed.
+#
+#   git tag v0.1.0 && git push origin v0.1.0
+#
+# The install.sh script downloads these assets by their exact names:
+#   nxm-webtomd-macos-arm64.tar.gz (+ .sha256)
+#   nxm-webtomd-linux-x64.tar.gz   (+ .sha256)
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build ${{ matrix.label }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            target: aarch64-apple-darwin
+            label: macos-arm64
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            label: linux-x64
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build release
+        run: cargo build --release --locked --target ${{ matrix.target }}
+
+      - name: Package
+        shell: bash
+        run: |
+          set -euo pipefail
+          BIN=nxm-webtomd
+          OUT="${BIN}-${{ matrix.label }}.tar.gz"
+          STAGE="$(mktemp -d)"
+          cp "target/${{ matrix.target }}/release/${BIN}" "${STAGE}/${BIN}"
+          tar -C "${STAGE}" -czf "${OUT}" "${BIN}"
+          if command -v shasum >/dev/null 2>&1; then
+            shasum -a 256 "${OUT}" | awk '{print $1}' > "${OUT}.sha256"
+          else
+            sha256sum "${OUT}" | awk '{print $1}' > "${OUT}.sha256"
+          fi
+          echo "Built ${OUT}:"
+          cat "${OUT}.sha256"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.label }}
+          path: |
+            nxm-webtomd-${{ matrix.label }}.tar.gz
+            nxm-webtomd-${{ matrix.label }}.tar.gz.sha256
+
+  release:
+    name: publish release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publish to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/nxm-webtomd-macos-arm64.tar.gz
+            dist/nxm-webtomd-macos-arm64.tar.gz.sha256
+            dist/nxm-webtomd-linux-x64.tar.gz
+            dist/nxm-webtomd-linux-x64.tar.gz.sha256
+          generate_release_notes: true
